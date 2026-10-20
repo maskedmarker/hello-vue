@@ -25,7 +25,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter, onBeforeRouteEnter, onBeforeRouteLeave } from 'vue-router'
+import { useRouter, onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
 
 const router = useRouter()
 const loggedIn = ref(localStorage.getItem('vue3-demo-logged-in') === 'true')
@@ -47,8 +47,9 @@ const logout = () => {
   router.push('/')
 }
 
-onBeforeRouteEnter((to, from) => {
-  log('enter', `进入 ${to.path}，来自 ${from.path}`)
+// 替代 onBeforeRouteEnter：组件挂载时记录首次进入
+onBeforeRouteUpdate((to, from) => {
+  log('enter', `路由更新: ${from.path} -> ${to.path}`)
 })
 
 onBeforeRouteLeave((to, from) => {

@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-// 路由懒加载示例
-const HomeView = () => import('./views/HomeView.vue')
-const UserView = () => import('./views/UserView.vue')
-const NamedViewDemo = () => import('./views/NamedViewDemo.vue')
-const ProgrammaticNav = () => import('./views/ProgrammaticNav.vue')
-const GuardDemo = () => import('./views/GuardDemo.vue')
-const NewsList = () => import('./views/NewsList.vue')
-const MessagesList = () => import('./views/MessagesList.vue')
-const NotFound = () => import('./views/NotFound.vue')
+// 路由懒加载示例（路径相对于 src/router/）
+const HomeView = () => import('../views/HomeView.vue')
+const UserView = () => import('../views/UserView.vue')
+const NamedViewDemo = () => import('../views/NamedViewDemo.vue')
+const ProgrammaticNav = () => import('../views/ProgrammaticNav.vue')
+const GuardDemo = () => import('../views/GuardDemo.vue')
+const NewsList = () => import('../views/NewsList.vue')
+const MessagesList = () => import('../views/MessagesList.vue')
+const NotFound = () => import('../views/NotFound.vue')
 
 // 模拟登录状态
 const isAuthenticated = () => localStorage.getItem('vue3-demo-logged-in') === 'true'
@@ -17,7 +17,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('./views/HomePage.vue')
+    component: () => import('../views/HomePage.vue')
   },
   // 嵌套路由
   {
@@ -52,11 +52,11 @@ const routes = [
     path: '/named-view',
     name: 'named-view',
     components: {
-      default: () => import('./views/NamedViewDemo.vue'),
-      header: () => import('./views/named/NamedHeader.vue'),
-      main: () => import('./views/named/NamedMain.vue'),
-      sidebar: () => import('./views/named/NamedSidebar.vue'),
-      footer: () => import('./views/named/NamedFooter.vue')
+      default: () => import('../views/NamedViewDemo.vue'),
+      header: () => import('../views/named/NamedHeader.vue'),
+      main: () => import('../views/named/NamedMain.vue'),
+      sidebar: () => import('../views/named/NamedSidebar.vue'),
+      footer: () => import('../views/named/NamedFooter.vue')
     }
   },
   // 编程式导航
@@ -73,8 +73,8 @@ const routes = [
     beforeEnter: (to, from) => {
       if (!isAuthenticated()) {
         // 模拟未登录时重定向
-        return confirm('此页面需要登录。是否跳转到用户1页面（模拟登录）？') 
-          ? '/user/1' 
+        return confirm('此页面需要登录。是否跳转到用户1页面（模拟登录）？')
+          ? '/user/1'
           : false
       }
     }

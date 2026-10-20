@@ -12,15 +12,10 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { onBeforeRouteEnter, onBeforeRouteUpdate } from 'vue-router'
+import { onBeforeRouteUpdate } from 'vue-router'
 
 onMounted(() => {
   console.log('[HomeView] 父级组件已挂载')
-})
-
-// 组件内守卫：路由进入前
-onBeforeRouteEnter((to, from) => {
-  console.log('[HomeView onBeforeRouteEnter] 即将进入:', to.path)
 })
 
 // 组件内守卫：路由参数更新时（如同路由的子路由切换）
