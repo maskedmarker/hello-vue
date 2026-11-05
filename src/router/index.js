@@ -51,13 +51,18 @@ const routes = [
   {
     path: '/named-view',
     name: 'named-view',
-    components: {
-      default: () => import('../views/NamedViewDemo.vue'),
-      header: () => import('../views/named/NamedHeader.vue'),
-      main: () => import('../views/named/NamedMain.vue'),
-      sidebar: () => import('../views/named/NamedSidebar.vue'),
-      footer: () => import('../views/named/NamedFooter.vue')
-    }
+    component: NamedViewDemo,   // 父级：布局组件，内部放置命名 <router-view>
+    children: [
+      {
+        path: '',               // 空路径，URL 仍为 /named-view
+        components: {
+          header: () => import('../views/named/NamedHeader.vue'),
+          main: () => import('../views/named/NamedMain.vue'),
+          sidebar: () => import('../views/named/NamedSidebar.vue'),
+          footer: () => import('../views/named/NamedFooter.vue')
+        }
+      }
+    ]
   },
   // 编程式导航
   {

@@ -18,8 +18,8 @@ main.js 挂载 App.vue（mount('#app')，与路由无关）
        │         ├─ /home/news     → NewsList
        │         └─ /home/messages → MessagesList
        ├─ /user/1 → UserView
-       ├─ /named-view → NamedViewDemo
-       │    └─ NamedViewDemo 内部的 4 个命名 <router-view />
+       ├─ /named-view → NamedViewDemo（父级：布局组件）
+       │    └─ 子路由（path: ''）的 components 渲染进布局内的 4 个命名 <router-view />
        │         ├─ <router-view name="header" />  → NamedHeader
        │         ├─ <router-view name="main" />    → NamedMain
        │         ├─ <router-view name="sidebar" /> → NamedSidebar
@@ -73,24 +73,41 @@ main.js 挂载 App.vue（mount('#app')，与路由无关）
 
 默认情况下，一条路由记录用一个 `component` 匹配一个 `<router-view />`（即未写 name 的默认出口）。当需要在同一个页面上同时渲染多个组件时，使用**命名视图**。
 
-### 1. 路由配置用 `components`（复数）
+### 关键规则：命名出口必须与组件所在的记录同层级
 
-`src/router/index.js` 中 `/named-view` 的路由：
+每个 `<router-view />` 按**嵌套层级（depth）**和 `name` 找组件：
+
+- App.vue 的顶层 `<router-view />` 是第 0 层，渲染 `matched[0]` 记录的 `default` 组件；
+- 第 0 层组件**内部**的 `<router-view />` 是第 1 层，只渲染 `matched[1]`（子路由）的组件。
+
+因此，把命名出口写进同一条记录的 `default` 组件内部是接不到该记录的命名组件的——层级对不上。要么把命名出口平级放到 App.vue（与顶层出口同为第 0 层），要么把命名组件拆到**子路由**、由父级布局组件内部的命名出口渲染。本项目采用后者，以保留 NamedViewDemo 里的布局样式。
+
+### 1. 路由配置：布局组件 + 带命名组件的子路由
+
+`src/router/index.js`：
 
 ```js
 {
   path: '/named-view',
-  components: {
-    default: () => import('../views/NamedViewDemo.vue'),
-    header: () => import('../views/named/NamedHeader.vue'),
-    main: () => import('../views/named/NamedMain.vue'),
-    sidebar: () => import('../views/named/NamedSidebar.vue'),
-    footer: () => import('../views/named/NamedFooter.vue')
-  }
+  name: 'named-view',
+  component: NamedViewDemo,   // 父级：布局组件，内部放置命名 <router-view>
+  children: [
+    {
+      path: '',               // 空路径，URL 仍为 /named-view
+      components: {
+        header: () => import('../views/named/NamedHeader.vue'),
+        main: () => import('../views/named/NamedMain.vue'),
+        sidebar: () => import('../views/named/NamedSidebar.vue'),
+        footer: () => import('../views/named/NamedFooter.vue')
+      }
+    }
+  ]
 }
 ```
 
-### 2. 模板中用 `name` 指定出口
+匹配链为两层：第 0 层记录渲染布局（NamedViewDemo），第 1 层子记录渲染命名组件，正好落进布局里那四个第 1 层的命名出口。
+
+### 2. 布局组件中用 `name` 指定出口
 
 `src/views/NamedViewDemo.vue`：
 
@@ -108,9 +125,12 @@ main.js 挂载 App.vue（mount('#app')，与路由无关）
 
 注意：
 
-- 路由里 `components.default` 对应模板中**不带 name** 的 `<router-view />`（本例中即 App.vue 里那个，渲染 NamedViewDemo 本身）。
+- 路由里 `component`（单数）等同于 `components: { default: component }`，对应模板中**不带 name** 的 `<router-view />`。
 - 带 `name="xxx"` 的出口只接收 `components` 中同名的组件；名字对不上（或该位置没有出口）则对应组件不会被渲染。
-- 若路由配置里写的是 `component`（单数），它等同于 `components: { default: component }`。
+- 本例子记录没有 `default` 键，因此即使布局里放一个不带 name 的 `<router-view />` 也不会渲染任何内容。
+- 另一种经典写法：把命名出口与顶层 `<router-view />` 平级放在 App.vue 中（同为第 0 层），即可直接挂在同一条记录的 `components` 上；缺点是布局结构会写进 App.vue。
+
+本节所述的层级问题曾在本项目真实发生过，完整排查记录见 [命名视图不渲染 — 错误分析与排查记录](./named-view-debug.md)。
 
 ---
 
@@ -132,6 +152,6 @@ main.js 挂载 App.vue（mount('#app')，与路由无关）
 - `main.js` 挂载 App.vue，与路由无关；App.vue 中 router-view 以外的部分永不变化。
 - App.vue 的 `<router-view />` 只渲染**顶层**路由组件。
 - 嵌套子路由渲染在**父组件内部**的 `<router-view />`，每层嵌套一层出口。
-- 命名视图用 `components` + `<router-view name="xxx" />`，让一条路由同时渲染多个组件到不同位置。
+- 命名视图用 `components` + `<router-view name="xxx" />` 渲染多个组件，但出口必须与组件所在的记录**同层级**（本项目通过"布局父组件 + 子路由"实现）。
 
 相关文档：[Vue Router 与浏览器核心 API](./vue-router.md)
