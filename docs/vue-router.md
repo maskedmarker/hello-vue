@@ -84,7 +84,7 @@ console.log(history.state) // { key: 'abc123', ... }
 ### 7. `<a>` 元素的默认行为 — 拦截
 
 - **浏览器默认行为**：点击 `<a href="/user/1">` 会触发整页跳转（页面刷新）。
-- **Vue Router 中**：`RouterLink` 组件内部渲染成 `<a>`，但绑定 `@click` 拦截默认行为，改为调用 `router.push(...)` 或 `router.replace(...)`，从而避免刷新。
+- **Vue Router 中**：`RouterLink` 组件内部渲染成 `<a>`，但绑定 `@click` 拦截默认行为，改为调用 `router.push(...)` 或 `router.replace(...)`，从而避免刷新。更多 RouterLink 的渲染细节（激活类名、`custom` 自定义渲染等）见 [router-link 渲染机制](./router-link.md)。
 
 ### 8. `scrollTo()` — 滚动恢复
 

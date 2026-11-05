@@ -2,8 +2,12 @@
   <div>
     <h1>📁 主页（嵌套路由父级）</h1>
     <nav>
-      <router-link :to="{ name: 'news' }">📰 新闻列表</router-link> |
-      <router-link :to="{ name: 'messages' }">💬 消息列表</router-link>
+      <router-link :to="{ name: 'news' }" custom v-slot="{ navigate, isActive }">
+        <button :class="{ active: isActive }" @click="navigate">📰 新闻列表</button>
+      </router-link> |
+      <router-link :to="{ name: 'messages' }" custom v-slot="{ navigate, isActive }">
+        <button :class="{ active: isActive }" @click="navigate">💬 消息列表</button>
+      </router-link>
     </nav>
     <hr />
     <router-view />
@@ -28,8 +32,15 @@ onBeforeRouteUpdate((to, from) => {
 nav {
   margin: 15px 0;
 }
-nav a {
+nav button {
   margin: 0 10px;
   color: #42b983;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+nav button.active {
+  color: #2c3e50;
 }
 </style>
