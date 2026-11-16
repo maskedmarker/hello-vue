@@ -7,9 +7,10 @@
     <section class="demo-section">
       <h2>方式一：props + emit（v-model 的本质）</h2>
       <p class="parent-value">
-        父组件中的值：<code>{{ name }}</code>
+        父组件中的值：name = <code>{{ name }}</code>
+        ｜ title = <code>{{ title }}</code>
       </p>
-      <ClassicChild v-model="name" />
+      <ClassicChild v-model="name" v-model:title="title" />
     </section>
 
     <!-- 方式二：defineModel -->
@@ -39,6 +40,7 @@ import ClassicChild from './ClassicChild.vue'
 import DefineModelChild from './DefineModelChild.vue'
 
 const name = ref('小明')
+const title = ref('默认标题')
 const count = ref(0)
 const message = ref('你好，Vue！')
 const note = ref('')
