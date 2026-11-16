@@ -27,7 +27,9 @@
 </template>
 
 <script setup>
-// 默认 model：对应父组件的 v-model="count"
+// 默认 model：无参等价于 defineModel('modelValue')，
+// 对应父组件的 v-model="count"（prop 名固定为 modelValue，
+// 与父组件的变量名 count 无关）
 const count = defineModel({ required: true })
 
 // 具名 model：对应父组件的 v-model:message
