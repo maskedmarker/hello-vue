@@ -6,6 +6,7 @@ const UserView = () => import('../views/UserView.vue')
 const NamedViewDemo = () => import('../views/NamedViewDemo.vue')
 const ProgrammaticNav = () => import('../views/ProgrammaticNav.vue')
 const GuardDemo = () => import('../views/GuardDemo.vue')
+const BindingDemo = () => import('../views/binding/BindingDemo.vue')
 const NewsList = () => import('../views/NewsList.vue')
 const MessagesList = () => import('../views/MessagesList.vue')
 const NotFound = () => import('../views/NotFound.vue')
@@ -83,6 +84,12 @@ const routes = [
           : false
       }
     }
+  },
+  // 父子双向绑定
+  {
+    path: '/binding',
+    name: 'binding',
+    component: BindingDemo
   },
   // 404
   {

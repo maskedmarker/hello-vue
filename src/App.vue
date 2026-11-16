@@ -7,7 +7,8 @@
       <router-link to="/user/2">用户2</router-link> |
       <router-link to="/named-view">命名视图</router-link> |
       <router-link to="/programmatic">编程导航</router-link> |
-      <router-link to="/guard-demo">路由守卫</router-link>
+      <router-link to="/guard-demo">路由守卫</router-link> |
+      <router-link to="/binding">父子双向绑定</router-link>
     </nav>
     <router-view />
   </div>
