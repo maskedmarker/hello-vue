@@ -1,0 +1,52 @@
+function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (_openBlock(), _createElementBlock("div", null, [
+    _cache[15] || (_cache[15] = _createElementVNode("h1", null, "🔄 父子双向绑定（v-model）", -1 /* CACHED */)),
+    _cache[16] || (_cache[16] = _createElementVNode("p", null, "父组件状态与子组件实时同步：修改任意一侧，另一侧立即更新", -1 /* CACHED */)),
+    _createCommentVNode(" 方式一：经典 props + emit "),
+    _createElementVNode("section", _hoisted_1, [
+      _cache[10] || (_cache[10] = _createElementVNode("h2", null, "方式一：props + emit（v-model 的本质）", -1 /* CACHED */)),
+      _createElementVNode("p", _hoisted_2, [
+        _cache[8] || (_cache[8] = _createTextVNode(" 父组件中的值：name = ", -1 /* CACHED */)),
+        _createElementVNode("code", null, _toDisplayString($setup.name), 1 /* TEXT */),
+        _cache[9] || (_cache[9] = _createTextVNode(" ｜ title = ", -1 /* CACHED */)),
+        _createElementVNode("code", null, _toDisplayString($setup.title), 1 /* TEXT */)
+      ]),
+      _createVNode($setup["ClassicChild"], {
+        modelValue: $setup.name,
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (($setup.name) = $event)),
+        title: $setup.title,
+        "onUpdate:title": _cache[1] || (_cache[1] = $event => (($setup.title) = $event)),
+        X: $setup.X,
+        "onUpdate:X": _cache[2] || (_cache[2] = $event => (($setup.X) = $event))
+      }, null, 8 /* PROPS */, ["modelValue", "title", "X"])
+    ]),
+    _createCommentVNode(" 方式二：defineModel "),
+    _createElementVNode("section", _hoisted_3, [
+      _cache[14] || (_cache[14] = _createElementVNode("h2", null, "方式二：defineModel（Vue 3.4+ 推荐）", -1 /* CACHED */)),
+      _createElementVNode("p", _hoisted_4, [
+        _cache[11] || (_cache[11] = _createTextVNode(" 父组件：count = ", -1 /* CACHED */)),
+        _createElementVNode("code", null, _toDisplayString($setup.count), 1 /* TEXT */),
+        _cache[12] || (_cache[12] = _createTextVNode(" ｜ message = ", -1 /* CACHED */)),
+        _createElementVNode("code", null, _toDisplayString($setup.message), 1 /* TEXT */),
+        _cache[13] || (_cache[13] = _createTextVNode(" ｜ note = ", -1 /* CACHED */)),
+        _createElementVNode("code", null, _toDisplayString($setup.note), 1 /* TEXT */)
+      ]),
+      _createVNode($setup["DefineModelChild"], {
+        modelValue: $setup.count,
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => (($setup.count) = $event)),
+        message: $setup.message,
+        "onUpdate:message": _cache[4] || (_cache[4] = $event => (($setup.message) = $event)),
+        note: $setup.note,
+        "onUpdate:note": _cache[5] || (_cache[5] = $event => (($setup.note) = $event))
+      }, null, 8 /* PROPS */, ["modelValue", "message", "note"]),
+      _createElementVNode("div", _hoisted_5, [
+        _createElementVNode("button", {
+          onClick: _cache[6] || (_cache[6] = $event => ($setup.count += 10))
+        }, "父组件内 count +10"),
+        _createElementVNode("button", {
+          onClick: _cache[7] || (_cache[7] = $event => ($setup.message = '来自父组件的问候 👋'))
+        }, "父组件修改 message")
+      ])
+    ])
+  ]))
+}

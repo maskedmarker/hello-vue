@@ -1,0 +1,48 @@
+function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (_openBlock(), _createElementBlock("div", _hoisted_1, [
+    _cache[6] || (_cache[6] = _createElementVNode("h3", null, "👶 子组件（props + emit）", -1 /* CACHED */)),
+    _createElementVNode("p", _hoisted_2, [
+      _cache[2] || (_cache[2] = _createTextVNode(" 子组件收到：modelValue = ", -1 /* CACHED */)),
+      _createElementVNode("code", null, _toDisplayString($props.modelValue), 1 /* TEXT */),
+      _cache[3] || (_cache[3] = _createTextVNode(" ｜ title = ", -1 /* CACHED */)),
+      _createElementVNode("code", null, _toDisplayString($props.title), 1 /* TEXT */)
+    ]),
+    _cache[7] || (_cache[7] = _createElementVNode("label", { for: "classic-name" }, "modelValue（v-model）：", -1 /* CACHED */)),
+    _createElementVNode("input", {
+      id: "classic-name",
+      value: $props.modelValue,
+      placeholder: "在子组件中输入…",
+      onInput: _cache[0] || (_cache[0] = $event => (_ctx.$emit('update:modelValue', $event.target.value)))
+    }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_3),
+    _cache[8] || (_cache[8] = _createElementVNode("label", { for: "classic-title" }, "title（v-model:title）：", -1 /* CACHED */)),
+    _createElementVNode("input", {
+      id: "classic-title",
+      value: $props.title,
+      placeholder: "编辑标题…",
+      onInput: _cache[1] || (_cache[1] = $event => (_ctx.$emit('update:title', $event.target.value)))
+    }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_4),
+    _cache[9] || (_cache[9] = _createElementVNode("p", { class: "hint" }, [
+      _createTextVNode(" 💡 v-model 的本质：父组件写 "),
+      _createElementVNode("code", null, "v-model=\"name\""),
+      _createTextVNode(" 会被编译为 "),
+      _createElementVNode("code", null, ":model-value=\"name\" @update:model-value=\"name = $event\""),
+      _createTextVNode("； "),
+      _createElementVNode("code", null, "v-model:title=\"title\""),
+      _createTextVNode(" 同理编译为 "),
+      _createElementVNode("code", null, ":title=\"title\" @update:title=\"title = $event\"")
+    ], -1 /* CACHED */)),
+    _createElementVNode("details", _hoisted_5, [
+      _cache[4] || (_cache[4] = _createElementVNode("summary", null, "🔍 未声明的 prop 去哪了？查看 $attrs", -1 /* CACHED */)),
+      _createElementVNode("pre", null, _toDisplayString(_ctx.$attrs), 1 /* TEXT */),
+      _cache[5] || (_cache[5] = _createElementVNode("p", { class: "hint" }, [
+        _createTextVNode(" 只有 defineProps / defineEmits 声明过的 prop 和事件会被\"消费\"， 其余传入的东西（如 "),
+        _createElementVNode("code", null, "v-model:X"),
+        _createTextVNode(" 编译出的 "),
+        _createElementVNode("code", null, "X"),
+        _createTextVNode(" 和 "),
+        _createElementVNode("code", null, "update:X"),
+        _createTextVNode("）都留在 $attrs 里， 并默认透传到根元素上（可用 inheritAttrs: false 关闭）。 ")
+      ], -1 /* CACHED */))
+    ])
+  ]))
+}
