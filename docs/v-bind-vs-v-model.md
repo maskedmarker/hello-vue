@@ -25,7 +25,18 @@
 
 - **单向**：JS 数据变化 → 属性更新；用户在 DOM 上的修改不会反向写回数据；
 - **通用**：可以绑定任意属性（`href`、`disabled`…）、`class`、`style`，以及组件 prop；
-- **无参数形式**：`v-bind="obj"` 可一次性绑定一个对象里的所有键。
+- **无参数形式**：`v-bind="obj"` 可一次性绑定一个对象里的所有键（键 = 属性名，值 = 绑定值）：
+
+  ```html
+  <script setup>
+  const attrs = { id: 'search-input', placeholder: '请输入关键词', disabled: false }
+  </script>
+
+  <input v-bind="attrs" />
+  <!-- 等价于 :id="attrs.id" :placeholder="attrs.placeholder" :disabled="attrs.disabled" -->
+  ```
+
+  组件上同样适用，可把对象一次性展开成多个 prop；配合 `$attrs` 是属性透传的经典写法：`<Child v-bind="$attrs" />`。`v-on` 也有对称形式：`v-on="handlers"` 批量绑定事件。。
 
 ---
 
