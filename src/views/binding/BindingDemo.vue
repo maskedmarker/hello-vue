@@ -10,7 +10,7 @@
         父组件中的值：name = <code>{{ name }}</code>
         ｜ title = <code>{{ title }}</code>
       </p>
-      <ClassicChild v-model="name" v-model:title="title" />
+      <ClassicChild v-model="name" v-model:title="title" v-model:X="X" />
     </section>
 
     <!-- 方式二：defineModel -->
@@ -41,6 +41,9 @@ import DefineModelChild from './DefineModelChild.vue'
 
 const name = ref('小明')
 const title = ref('默认标题')
+// 用于试验未声明 prop：v-model:X 传下去，但 ClassicChild 没有声明 X，
+// 编译出的 prop X 和事件 update:X 都会落入子组件的 $attrs
+const X = ref('试验值')
 const count = ref(0)
 const message = ref('你好，Vue！')
 const note = ref('')

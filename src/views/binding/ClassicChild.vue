@@ -29,6 +29,17 @@
       <code>v-model:title="title"</code> 同理编译为
       <code>:title="title" @update:title="title = $event"</code>
     </p>
+
+    <details class="attrs-view">
+      <summary>🔍 未声明的 prop 去哪了？查看 $attrs</summary>
+      <pre>{{ $attrs }}</pre>
+      <p class="hint">
+        只有 defineProps / defineEmits 声明过的 prop 和事件会被"消费"，
+        其余传入的东西（如 <code>v-model:X</code> 编译出的 <code>X</code>
+        和 <code>update:X</code>）都留在 $attrs 里，
+        并默认透传到根元素上（可用 inheritAttrs: false 关闭）。
+      </p>
+    </details>
   </div>
 </template>
 
@@ -94,5 +105,25 @@ code {
   font-size: 13px;
   color: #666;
   line-height: 1.6;
+}
+.attrs-view {
+  margin-top: 12px;
+  font-size: 13px;
+}
+.attrs-view summary {
+  cursor: pointer;
+  color: #42b983;
+  font-weight: bold;
+}
+.attrs-view pre {
+  margin: 8px 0;
+  padding: 10px;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border-radius: 4px;
+  font-size: 12px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 </style>
